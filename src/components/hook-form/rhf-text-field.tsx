@@ -20,6 +20,7 @@ export default function RHFTextInput({ name, type = "text", ...props }: Props) {
           <TextField
             {...field}
             fullWidth
+            variant="outlined"
             type={type}
             error={!!error}
             helperText={error?.message}

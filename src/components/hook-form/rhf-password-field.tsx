@@ -21,6 +21,7 @@ export default function RHFPasswordField({ name, ...props }: Props) {
           <TextField
             {...field}
             fullWidth
+            variant="outlined"
             type={show.value ? "text" : "password"}
             autoComplete="current-password"
             error={!!error}
@@ -31,7 +32,7 @@ export default function RHFPasswordField({ name, ...props }: Props) {
                   <IconButton onClick={show.onToggle} edge="end">
                     <Iconify icon={show.value ? "bi:eye-slash" : "bi:eye"} />
                   </IconButton>
-                </InputAdornment>
+                </InputAdornment>,
               }
             }}
             {...props}

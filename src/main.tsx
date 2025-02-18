@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router";
 import './index.css'
 import { Router } from './routes';
 import { HelmetProvider } from 'react-helmet-async'
+import { StyledEngineProvider } from '@mui/material/styles';
 
 createRoot(document.getElementById('root')!).render(
   <HelmetProvider>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </StyledEngineProvider>
   </HelmetProvider>
 )

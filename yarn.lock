@@ -386,7 +386,7 @@
 
 "@hookform/resolvers@^4.1.0":
   version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-4.1.0.tgz#17ba2b68d2883be6a06af1c7507be8e7c2f684b9"
+  resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-4.1.0.tgz"
   integrity sha512-fX/uHKb+OOCpACLc6enuTQsf0ZpRrKbeBBPETg5PCPLCIYV6osP2Bw6ezuclM61lH+wBF9eXcuC0+BFh9XOEnQ==
   dependencies:
     caniuse-lite "^1.0.30001698"
@@ -421,14 +421,14 @@
 
 "@iconify/react@^5.2.0":
   version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-5.2.0.tgz#c525afc322edba4152aa81e42e22a71a7c31a62b"
+  resolved "https://registry.npmjs.org/@iconify/react/-/react-5.2.0.tgz"
   integrity sha512-7Sdjrqq3fkkQNks9SY3adGC37NQTHsBJL2PRKlQd455PoDi9s+Es9AUTY+vGLFOYs5yO9w9yCE42pmxCwG26WA==
   dependencies:
     "@iconify/types" "^2.0.0"
 
 "@iconify/types@^2.0.0":
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
+  resolved "https://registry.npmjs.org/@iconify/types/-/types-2.0.0.tgz"
   integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
 
 "@jridgewell/gen-mapping@^0.3.5":
@@ -945,7 +945,7 @@ callsites@^3.0.0:
 
 caniuse-lite@^1.0.30001698:
   version "1.0.30001700"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001700.tgz#26cd429cf09b4fd4e745daf4916039c794d720f6"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001700.tgz"
   integrity sha512-2S6XIXwaE7K7erT8dY+kLQcpa5ms63XlRkMkReXjle+kf6c5g38vyMl+Z5y8dSxOFDhcFe+nxnn261PLxBSQsQ==
 
 chalk@^4.0.0:
@@ -1616,7 +1616,14 @@ react-is@^19.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-19.0.0.tgz"
   integrity sha512-H91OHcwjZsbq3ClIDHMzBShc1rotbfACdWENsmEf0IFvZ3FgGPtdHMcsv45bQ1hAbgdfiA8SnxTKfDS+x/8m2g==
 
-react-router@^7.1.5:
+react-router-dom@^7.1.5:
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-7.1.5.tgz#6b706a5503c01d99c1af69336a7de2e21cadd339"
+  integrity sha512-/4f9+up0Qv92D3bB8iN5P1s3oHAepSGa9h5k6tpTFlixTTskJZwKGhJ6vRJ277tLD1zuaZTt95hyGWV1Z37csQ==
+  dependencies:
+    react-router "7.1.5"
+
+react-router@7.1.5, react-router@^7.1.5:
   version "7.1.5"
   resolved "https://registry.npmjs.org/react-router/-/react-router-7.1.5.tgz"
   integrity sha512-8BUF+hZEU4/z/JD201yK6S+UYhsf58bzYIDq2NS1iGpwxSXDu7F+DeGSkIXMFBuHZB21FSiCzEcUb18cQNdRkA==
@@ -1839,5 +1846,10 @@ yocto-queue@^0.1.0:
 
 zod@^3.24.2:
   version "3.24.2"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.2.tgz#8efa74126287c675e92f46871cfc8d15c34372b3"
+  resolved "https://registry.npmjs.org/zod/-/zod-3.24.2.tgz"
   integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
+
+zustand@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.npmjs.org/zustand/-/zustand-5.0.3.tgz"
+  integrity sha512-14fwWQtU3pH4dE0dOpdMiWjddcH+QzKIgk1cl8epwSE7yag43k/AD/m4L6+K7DytAOr9gGBe3/EXj9g7cdostg==

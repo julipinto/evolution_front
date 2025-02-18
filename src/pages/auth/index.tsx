@@ -1,9 +1,8 @@
-import { Box, Button, CssBaseline, Stack, styled, Typography } from "@mui/material";
-import MuiCard from '@mui/material/Card';
-import { FormProvider, useForm } from "react-hook-form";
-import { PasswordField, TextField } from "../../components/hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, CssBaseline, Stack, styled, Typography } from "@mui/material";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+import { PasswordField, TextField } from "../../components/hook-form";
 
 const authSchema = z.object({
   email: z.string().email(),
@@ -12,24 +11,24 @@ const authSchema = z.object({
 
 type AuthSchema = z.infer<typeof authSchema>;
 
-const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
-  },
-  boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
-}));
+// const Card = styled(MuiCard)(({ theme }) => ({
+//   display: 'flex',
+//   flexDirection: 'column',
+//   alignSelf: 'center',
+//   width: '100%',
+//   padding: theme.spacing(4),
+//   gap: theme.spacing(2),
+//   margin: 'auto',
+//   [theme.breakpoints.up('sm')]: {
+//     maxWidth: '450px',
+//   },
+//   boxShadow:
+//     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+//   ...theme.applyStyles('dark', {
+//     boxShadow:
+//       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+//   }),
+// }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',

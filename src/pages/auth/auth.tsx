@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CssBaseline, FormControl, FormLabel, Stack, styled, Typography } from "@mui/material";
-import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
-import { PasswordField, TextField } from "../../components/hook-form";
+import { Box, Button, CssBaseline, Stack, styled, Typography } from "@mui/material";
 import MuiCard from '@mui/material/Card';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { PasswordField, TextField } from "../../components/hook-form";
 import AppTheme from "../../components/theme/AppTheme";
+import FormProvider from "../../components/form/form-provider";
 
 const authSchema = z.object({
   email: z.string().email(),
@@ -65,6 +67,8 @@ export default function Auth(props: { disableCustomTheme?: boolean }) {
     },
   })
 
+  const onSubmit = (data: AuthSchema) => { }
+
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
@@ -87,35 +91,19 @@ export default function Auth(props: { disableCustomTheme?: boolean }) {
               gap: 2,
             }}
           >
-            <FormProvider {...methods}>
-              <FormControl>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <TextField
-                  // error={emailError}
-                  // helperText={emailErrorMessage}
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="your@email.com"
-                  autoComplete="email"
-                  autoFocus
-                  required
-                  fullWidth
-                  variant="outlined"
-                  // color={emailError ? 'error' : 'primary'}
-                  />
-              </FormControl>
-              {/* <TextField
+            <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+              <TextField
                 name="email"
-                label="Email"
-                type="email"
+                placeholder="your@email.com"
                 autoComplete="email"
+                label="Email"
+                autoFocus
                 required
-              /> */}
+              />
               <PasswordField
                 name="password"
                 label="Password"
-                type="password"
+                placeholder="******"
                 required
               />
               <Button

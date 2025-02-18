@@ -1,4 +1,4 @@
-import { FormLabel, TextField, TextFieldProps } from "@mui/material";
+import { FormControl, FormLabel, TextField, TextFieldProps } from "@mui/material";
 import { HTMLInputTypeAttribute } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -7,7 +7,7 @@ type Props = TextFieldProps & {
   type?: HTMLInputTypeAttribute;
 };
 
-export default function RHFTextInput({ name, type = "text", ...props }: Props) {
+export default function RHFTextInput({ name, type = "text", label, ...props }: Props) {
   const { control } = useFormContext();
 
   return (
@@ -15,8 +15,8 @@ export default function RHFTextInput({ name, type = "text", ...props }: Props) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <>
-          <FormLabel htmlFor={name}>{props.label}</FormLabel>
+        <FormControl>
+          <FormLabel htmlFor={name}>{label}</FormLabel>
           <TextField
             {...field}
             fullWidth
@@ -26,7 +26,7 @@ export default function RHFTextInput({ name, type = "text", ...props }: Props) {
             helperText={error?.message}
             {...props} 
           />
-        </>
+        </FormControl>
       )}
     />
   );

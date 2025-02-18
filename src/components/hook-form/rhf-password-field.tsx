@@ -1,4 +1,4 @@
-import { FormLabel, IconButton, InputAdornment, TextField, TextFieldProps } from "@mui/material";
+import { FormControl, FormLabel, IconButton, InputAdornment, TextField, TextFieldProps } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { useBoolean } from "../../hooks/use-boolean";
 import Iconify from "../iconify";
@@ -7,7 +7,7 @@ type Props = TextFieldProps & {
   name: string;
 };
 
-export default function RHFPasswordField({ name, ...props }: Props) {
+export default function RHFPasswordField({ name, label, ...props }: Props) {
   const { control } = useFormContext();
   const show = useBoolean(false);
 
@@ -16,14 +16,13 @@ export default function RHFPasswordField({ name, ...props }: Props) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <>
-          <FormLabel htmlFor={name}>{props.label}</FormLabel>
+        <FormControl>
+          <FormLabel htmlFor={name}>{label}</FormLabel>
           <TextField
             {...field}
             fullWidth
             variant="outlined"
             type={show.value ? "text" : "password"}
-            autoComplete="current-password"
             error={!!error}
             helperText={error?.message}
             slotProps={{
@@ -37,7 +36,7 @@ export default function RHFPasswordField({ name, ...props }: Props) {
             }}
             {...props}
           />
-        </>
+        </FormControl>
       )}
     />
   );

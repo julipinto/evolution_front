@@ -1,12 +1,14 @@
-import { Navigate, Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../store/auth-store";
+import { useEffect } from "react";
 
 export default function PrivateRoutes() { 
-  const { auth_token } = useAuthStore((state) => state)
+  const { authToken } = useAuthStore((state) => state);
+  const navigate = useNavigate();
 
-  if (!auth_token) {
-    return <Navigate to="/auth" />
-  }
+  useEffect(() => {
+    if (!authToken) navigate("/auth");
+  }, [authToken, navigate])
 
   return <Outlet/>
 }

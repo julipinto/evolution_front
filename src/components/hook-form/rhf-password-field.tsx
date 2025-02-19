@@ -22,6 +22,7 @@ export default function RHFPasswordField({ name, label, ...props }: Props) {
             {...field}
             fullWidth
             variant="outlined"
+            autoComplete="current-password"
             type={show.value ? "text" : "password"}
             error={!!error}
             helperText={error?.message}

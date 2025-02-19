@@ -1,19 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CssBaseline, Stack, styled, Typography } from "@mui/material";
+import { Button, CssBaseline, Stack, styled, Typography } from "@mui/material";
 import MuiCard from '@mui/material/Card';
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
+import { login } from "../../api/auth";
+import FormProvider from "../../components/form/form-provider";
 import { PasswordField, TextField } from "../../components/hook-form";
 import AppTheme from "../../components/theme/AppTheme";
-import FormProvider from "../../components/form/form-provider";
-
-const authSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
-
-type AuthSchema = z.infer<typeof authSchema>;
+import { useAuthStore } from "../../store/auth-store";
+import { AuthSchema, authShape } from "../../types/auth";
+import { useNavigate } from "react-router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -58,16 +54,30 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function Auth(props: { disableCustomTheme?: boolean }) {
+  const store = useAuthStore(state => state);
+  const navigate = useNavigate();
 
   const methods = useForm<AuthSchema>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(authShape),
     defaultValues: {
       email: '',
       password: '',
     },
   })
 
-  const onSubmit = (data: AuthSchema) => { }
+  const { handleSubmit, reset } = methods;	
+
+  const onSubmit = handleSubmit(async (data: AuthSchema) => { 
+    try {
+      const response = await login(data);
+      store.login(response.data.token);
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      reset();
+    }
+  })
 
   return (
     <AppTheme {...props}>
@@ -81,17 +91,7 @@ export default function Auth(props: { disableCustomTheme?: boolean }) {
             >
               Login
             </Typography>
-          <Box
-            component="form"
-            noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
-            }}
-          >
-            <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormProvider methods={methods} onSubmit={onSubmit}>
               <TextField
                 name="email"
                 placeholder="your@email.com"
@@ -114,7 +114,6 @@ export default function Auth(props: { disableCustomTheme?: boolean }) {
                 Entrar
               </Button>
             </FormProvider>
-          </Box>
         </Card> 
       </SignInContainer>
     </AppTheme>

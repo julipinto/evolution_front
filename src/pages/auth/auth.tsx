@@ -10,6 +10,7 @@ import AppTheme from "../../components/theme/AppTheme";
 import { useAuthStore } from "../../store/auth-store";
 import { AuthSchema, authShape } from "../../types/auth";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -78,6 +79,12 @@ export default function Auth(props: { disableCustomTheme?: boolean }) {
       reset();
     }
   })
+
+  useEffect(() => {
+    if (store.authToken) {
+      navigate('/');
+    }
+  }, [store.authToken, navigate])
 
   return (
     <AppTheme {...props}>

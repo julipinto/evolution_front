@@ -7,7 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { BrazilFlag, GlobeFlag, IndiaFlag, UsaFlag } from '../../internals/components/CustomIcons';
+import { BrazilFlag, GlobeFlag, IndiaFlag, UsaFlag } from '../../../internals/components/CustomIcons';
+// import { BrazilFlag, GlobeFlag, IndiaFlag, UsaFlag } from './internals/components/CustomIcons';
 
 const data = [
   { label: 'India', value: 50000 },

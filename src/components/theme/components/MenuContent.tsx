@@ -3,6 +3,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import ScaleRoundedIcon from '@mui/icons-material/ScaleRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import StraightenIcon from '@mui/icons-material/Straighten';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,8 +15,9 @@ import { Link, matchPath, useLocation } from 'react-router';
 
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, path: '/' },
-  { text: 'Measurements', icon: <AnalyticsRoundedIcon />, path: '/measurements' },
-  { text: 'Weights', icon: <ScaleRoundedIcon />, path: '/clients' },
+  { text: 'Skin Folds', icon: <AnalyticsRoundedIcon />, path: '/skin-folds' },
+  { text: 'Measurements', icon: <StraightenIcon />, path: '/measurements' },
+  { text: 'Weights', icon: <ScaleRoundedIcon />, path: '/weights' },
 ];
 
 const secondaryListItems = [
@@ -26,10 +28,12 @@ const secondaryListItems = [
 export default function MenuContent() {
   const { pathname } = useLocation()
 
-  const activeLink = useCallback((path: string, deep = true) => {
+  const activeLink = useCallback((path: string, root = false, deep = false) => {
     const normalActive = path ? pathname.includes(path) : false
     const deepActive = path ? !!matchPath({ path, end: false }, pathname) : false
-    return deep ? deepActive : normalActive
+    const isRoot = root ? pathname === '/' : false
+    // return deep ? deepActive : normalActive
+    // return deep ? deepActive : normalActive || isRoot
   }, [pathname])
 
   return (
@@ -38,7 +42,7 @@ export default function MenuContent() {
         {mainListItems.map((item, index) => (
           <Link to={item.path} key={index} style={{ all: 'unset' }}>
             <ListItem disablePadding sx={{ display: 'block' }}>
-              <ListItemButton selected={activeLink(item.path)}>
+              <ListItemButton selected={activeLink(item.path, index === 0, true)}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>

@@ -16,8 +16,10 @@ export function Router() {
       {/* private routes */}
       <Route path="/" element={<PrivateRoutes />} >
         <Route path="/" element={<MainLayout />} >
-          <Route path="/dash2" element={<Dash2 />} />
           <Route path="/" element={<Dash />} />
+          <Route path="/skin-folds" element={<Dash2 />} />
+          <Route path="/measurements" element={<Dash2 />} />
+          <Route path="/weights" element={<Dash2 />} />
         </Route>
       </Route>
     </Routes>

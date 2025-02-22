@@ -4,10 +4,26 @@ import AppTheme from "../theme/AppTheme";
 import AppNavbar from "../theme/components/AppNavbar";
 import Header from "../theme/components/Header";
 import SideMenu from "../theme/components/SideMenu";
+import { Suspense } from "react";
+import LoadingContent from "../loading-content";
+
+import {
+  chartsCustomizations,
+  dataGridCustomizations,
+  datePickersCustomizations,
+  treeViewCustomizations
+} from '../../components/theme/customizations';
+
+const xThemeComponents = {
+  ...chartsCustomizations,
+  ...dataGridCustomizations,
+  ...datePickersCustomizations,
+  ...treeViewCustomizations,
+};
 
 export default function MainLayout() {
   return (
-    <AppTheme>
+    <AppTheme themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
         <SideMenu />
@@ -30,7 +46,9 @@ export default function MainLayout() {
             }}
           >
             <Header />
-            <Outlet />
+            <Suspense fallback={<LoadingContent />}>
+              <Outlet />
+            </Suspense>
           </Stack>
         </Box>
       </Box>

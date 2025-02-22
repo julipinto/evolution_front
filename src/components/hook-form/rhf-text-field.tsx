@@ -15,7 +15,7 @@ export default function RHFTextInput({ name, type = "text", label, ...props }: P
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <FormControl>
+        <FormControl fullWidth>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <TextField
             {...field}

@@ -16,7 +16,7 @@ export default function RHFPasswordField({ name, label, ...props }: Props) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <FormControl>
+        <FormControl fullWidth>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <TextField
             {...field}

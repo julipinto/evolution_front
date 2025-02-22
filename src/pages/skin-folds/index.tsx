@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async'
+import SkinFolds from './skin-folds'
 // sections
-import Auth from './auth'
 
 // ----------------------------------------------------------------------
 
-export default function AuthPage() {
+export default function SkinFoldsPage() {
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Skin Folds</title>
       </Helmet>
 
-      <Auth />
+      <SkinFolds />
     </>
   )
 }

@@ -28,13 +28,16 @@ const secondaryListItems = [
 export default function MenuContent() {
   const { pathname } = useLocation()
 
-  const activeLink = useCallback((path: string, root = false, deep = false) => {
-    const normalActive = path ? pathname.includes(path) : false
-    const deepActive = path ? !!matchPath({ path, end: false }, pathname) : false
-    const isRoot = root ? pathname === '/' : false
-    // return deep ? deepActive : normalActive
-    // return deep ? deepActive : normalActive || isRoot
-  }, [pathname])
+  const activeLink = useCallback((path: string, root = false, deep = true) => {
+    if (root && pathname === '/') return true; // Página inicial exata
+    if (path === '/') return pathname === '/'; // Garante que "/" só seja ativo em "/"
+    
+    if (deep) {
+      return !!matchPath({ path, end: false }, pathname); // Deep matching para outras páginas
+    } else {
+      return pathname === path; // Correspondência exata
+    }
+  }, [pathname]);
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>

@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, DialogActions, DialogContentText } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import Dialog from '../../components/dialog';
 import FormProvider from '../../components/form/form-provider';
 import { DatePickerField, NumberField, TextField } from '../../components/hook-form';
 import { SkinFoldSchema, skinFoldShape } from '../../types/skin-folds-type';
-import Grid from '@mui/material/Grid2';
 
 type Props = {
   open: boolean
@@ -50,13 +50,13 @@ function ModalSkinFoldRegister({ open, onClose }: Props) {
         A partir do cálculo de dobras, faremos uma análise do seu percentual de gordura.
       </DialogContentText>
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        {/* <Scrollbar></Scrollbar> */}
         <Grid
           container
           spacing={2}
           columns={12}
+          alignItems="flex-end"
         >
-          <Grid size={{ sm: 6 }}>
+          <Grid size={{ xs: 6 }}>
             <NumberField
               name="triceps"
               label="Dobra tricipital"
@@ -126,8 +126,7 @@ function ModalSkinFoldRegister({ open, onClose }: Props) {
             />
           </Grid>
         </Grid>
-
-        <DialogActions sx={{ pb: 3, px: 3 }}>
+        <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
           <Button variant="contained" type="submit">
             Continue

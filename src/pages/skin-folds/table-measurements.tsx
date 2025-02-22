@@ -9,14 +9,14 @@ type Props = {
 
 // Dicionário para formatar as métricas das dobras
 const FoldMetric = {
-  triceps: 'Dobra Tricipital (mm)',
-  biceps: 'Dobra Bicipital (mm)',
-  abdominal: 'Dobra Abdominal (mm)',
-  subscapular: 'Dobra Subescapular (mm)',
-  thigh: 'Dobra da Coxa (mm)',
-  suprailiac: 'Dobra Suprailiaca (mm)',
-  middle_axillary: 'Dobra Axilar Média (mm)',
-  calf: 'Dobra da Panturrilha (mm)',
+  triceps: "Dobra Tricipital (mm)",
+  biceps: "Dobra Bicipital (mm)",
+  abdominal: "Dobra Abdominal (mm)",
+  subscapular: "Dobra Subescapular (mm)",
+  thigh: "Dobra da Coxa (mm)",
+  suprailiac: "Dobra Suprailiaca (mm)",
+  middle_axillary: "Dobra Axilar Média (mm)",
+  calf: "Dobra da Panturrilha (mm)",
 };
 
 export default function AnthropometricFoldsTable({ skinFolds }: Props) {
@@ -31,13 +31,20 @@ export default function AnthropometricFoldsTable({ skinFolds }: Props) {
       field: `date_${item.id}`, // Usar o ID para evitar conflitos
       headerName: formatDate(item.measured_at),
       width: 150,
-      renderCell: (params: { row: { metric: keyof typeof item.measurements; [key: string]: any } }) => {
+      renderCell: (params: {
+        row: { metric: keyof typeof item.measurements; [key: string]: any };
+      }) => {
         const metric: keyof typeof item.measurements = params.row.metric;
-        const metricKey = Object.keys(FoldMetric).find((key) => FoldMetric[key as keyof typeof FoldMetric] === metric);
+        const metricKey = Object.keys(FoldMetric).find(
+          (key) => FoldMetric[key as keyof typeof FoldMetric] === metric
+        );
 
         // Acessa o valor atual e a diferença
         const value = params.row[`date_${item.id}`]; // Valor da célula
-        const diff = metricKey ? item.measurements[metricKey as keyof typeof item.measurements]?.last_diff : null;
+        const diff = metricKey
+          ? item.measurements[metricKey as keyof typeof item.measurements]
+              ?.last_diff
+          : null;
 
         return <ComparableFieldChart current={value} diff={diff} invert />;
       },
@@ -52,17 +59,41 @@ export default function AnthropometricFoldsTable({ skinFolds }: Props) {
     return {
       id: metric,
       metric: metricLabel, // Formata a métrica usando o dicionário
-      ...skinFolds.reduce((acc: { [key: string]: number | string | null }, item: RequestSkinFolds) => {
-        // Adiciona o valor da métrica para cada data
-        acc[`date_${item.id}`] = item.measurements[metric as keyof typeof item.measurements]?.current || null;
-        return acc;
-      }, {}),
+      ...skinFolds.reduce(
+        (
+          acc: { [key: string]: number | string | null },
+          item: RequestSkinFolds
+        ) => {
+          // Adiciona o valor da métrica para cada data
+          acc[`date_${item.id}`] =
+            item.measurements[metric as keyof typeof item.measurements]
+              ?.current || null;
+          return acc;
+        },
+        {}
+      ),
     };
   });
 
+  // Adicionar uma linha extra para o "measured_by"
+  const measuredByRow = {
+    id: "measured_by",
+    metric: "Medido por",
+    ...skinFolds.reduce(
+      (acc: { [key: string]: string }, item: RequestSkinFolds) => {
+        acc[`date_${item.id}`] = item.measured_by;
+        return acc;
+      },
+      {}
+    ),
+  };
+
+  // Adicionar a linha extra ao final das linhas
+  const rowsWithMeasuredBy = [...rows, measuredByRow];
+
   return (
     <DataGrid
-      rows={rows}
+      rows={rowsWithMeasuredBy}
       columns={columns}
       disableRowSelectionOnClick
       disableColumnSorting

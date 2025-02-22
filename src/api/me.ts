@@ -1,5 +1,6 @@
 import axios from "./client";
 
-export function getMe() {
-  return axios.get("/me");
+export async function getMe() {
+  const response = await axios.get("/me");
+  return response.data;
 }

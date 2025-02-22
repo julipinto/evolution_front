@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, DialogActions, DialogContentText } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import Dialog from '../../components/dialog';
 import FormProvider from '../../components/form/form-provider';
-import { DatePickerField, NumberField, TextField } from '../../components/hook-form';
 import { SkinFoldSchema, skinFoldShape } from '../../types/skin-folds-type';
+import { SkinFoldForm } from './skin-fold-form';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postFolds } from '../../api/skin-folds';
 
 type Props = {
   open: boolean
@@ -14,34 +15,46 @@ type Props = {
 }
 
 function ModalSkinFoldRegister({ open, onClose }: Props) {
-  // const queryClient = useQueryClient()
-  // const registerSkinFolds = useMutation({
-  //   mutationFn: postFolds,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ['skin-folds'] })
-  //   },
-  // })
+  const queryClient = useQueryClient()
+
+  const registerSkinFolds = useMutation({
+    mutationFn: postFolds,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['skin-folds'] })
+      onClose();
+    },
+    onError: (error) => {
+      console.error('Erro ao registrar as dobras cutâneas:', error);
+    }
+  })
 
   const methods = useForm<SkinFoldSchema>({
     resolver: zodResolver(skinFoldShape),
+    // @ts-ignore
     defaultValues: {
-      triceps: undefined,
-      biceps: undefined,
-      abdominal: undefined,
-      subscapular: undefined,
-      suprailiac: undefined,
-      middle_axillary: undefined,
-      calf: undefined,
-      weight: undefined,
+      triceps: "",
+      biceps: "",
+      abdominal: "",
+      subscapular: "",
+      suprailiac: "",
+      middle_axillary: "",
+      thigh: "",
+      calf: "",
+      weight: "",
       measured_by: '',
       measured_at: new Date(),
     },
   })
 
-  const onSubmit = methods.handleSubmit(async (data) => {
+  const { handleSubmit, formState: {isSubmitting} } = methods
+
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data)
-    // await registerSkinFolds.mutateAsync(data)
-    onClose()
+    try {
+      await registerSkinFolds.mutateAsync(data)
+    } catch (error) {
+      console.error('Erro ao registrar as dobras cutâneas:', error)
+    }
   })
 
   return (
@@ -50,84 +63,15 @@ function ModalSkinFoldRegister({ open, onClose }: Props) {
         A partir do cálculo de dobras, faremos uma análise do seu percentual de gordura.
       </DialogContentText>
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <Grid
-          container
-          spacing={2}
-          columns={12}
-          alignItems="flex-end"
-        >
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="triceps"
-              label="Dobra tricipital"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-
-          <Grid size={{ xs: 6 }}>        
-            <NumberField
-              name="biceps"
-              label="Dobra bicipital"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="abdominal"
-              label="Dobra abdominal"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="supraliac"
-              label="Dobra supra-ilíaca"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="subscapular"
-              label="Dobra subescapular"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="suprailiac"
-              label="Dobra supra-ilíaca"
-              placeholder='123 (mm)'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <NumberField
-              name="middle_axillary"
-              label="Dobra axilar média"
-              placeholder='123 (mm)'
-              />
-          </Grid>
-          <Grid size={{ xs: 12 }}>
-            <NumberField
-              name='weight'
-              label='Peso'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <TextField
-              name='measured_by'
-              label='Profissional que realizou a medição'
-            />
-          </Grid>
-          <Grid size={{ xs: 6 }}>
-            <DatePickerField
-              name='measured_at'
-              label='Data da medição'
-            />
-          </Grid>
-        </Grid>
+        <SkinFoldForm />
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button
+            onClick={onClose}
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
           <Button variant="contained" type="submit">
             Continue
           </Button>

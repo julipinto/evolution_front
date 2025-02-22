@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Dialog from '../../components/dialog';
 import FormProvider from '../../components/form/form-provider';
 import { SkinFoldSchema, skinFoldShape } from '../../types/skin-folds-type';
-import { SkinFoldForm } from './skin-fold-form';
+import { SkinFoldForm } from './form-skin-fold';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFolds } from '../../api/skin-folds';
 
